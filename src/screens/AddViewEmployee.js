@@ -4,7 +4,7 @@ import Header from '../sharedcomponents/header/header';
 import {colors} from '../utils/colorManager';
 import {textManger} from '../utils/textStyleManager';
 import PlaceholderErrorTextInput from '../sharedcomponents/textinput/PlaceholderErrorTextInput';
-import {useEmployeeStore} from '../store/employeeStore';
+import {useEmployeeStore} from '../store/chatStore';
 import {validateEmail} from '../utils/helpers';
 import {DashBoardText, ErrorText, PlaceholderText} from '../utils/textManager';
 

@@ -5,7 +5,7 @@ import {colors} from '../utils/colorManager';
 import Search from '../assets/icons/search.svg';
 import {textManger} from '../utils/textStyleManager';
 import PlaceholderErrorTextInput from '../sharedcomponents/textinput/PlaceholderErrorTextInput';
-import {useEmployeeStore} from '../store/employeeStore';
+import {useEmployeeStore} from '../store/chatStore';
 import {validateEmail} from '../utils/helpers';
 import {
   Das,

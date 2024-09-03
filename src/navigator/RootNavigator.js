@@ -4,14 +4,14 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import AddViewEmployee from '../screens/AddViewEmployee';
 import Home from '../screens/Dashboard';
-import { useEmployeeStore } from '../store/employeeStore';
+import { useEmployeeStore } from '../store/chatStore';
 import SearchEmployee from '../screens/SearchEmployees';
+import Chat from '../screens/Chat';
 
 const Stack = createNativeStackNavigator();
 
 const RootNavigator = () => {
-  const {intializing} = useEmployeeStore();
-  console.log(intializing, 'intializing');
+  // const {intializing} = useChatStore();
   return (
     <NavigationContainer>
       <HomeNavigator />
@@ -35,22 +35,15 @@ const HomeNavigator = () => {
             animation: 'fade_from_bottom',
           }}
         />
-        <Stack.Screen
-          name="addEmployee"
-          component={AddViewEmployee}
+         <Stack.Screen
+          name="chat"
+          component={Chat}
           options={{
             headerShown: false,
             animation: 'fade_from_bottom',
           }}
         />
-        <Stack.Screen
-          name="searchEmployee"
-          component={SearchEmployee}
-          options={{
-            headerShown: false,
-            animation: 'fade_from_bottom',
-          }}
-        />
+       
       </Stack.Group>
     </Stack.Navigator>
   );

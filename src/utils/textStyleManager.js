@@ -15,12 +15,12 @@ export const textManger = StyleSheet.create({
   heading_lg: {
     fontSize: 20,
     fontWeight: "800",
-    color: colors.black,
+    color: colors.white,
   },
   heading_md_default: {
     fontSize: 18,
     fontWeight: '500',
-    color: colors.black,
+    color: colors.white,
   },
   error_md: {
     fontSize: 13,

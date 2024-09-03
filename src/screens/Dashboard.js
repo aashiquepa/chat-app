@@ -1,15 +1,82 @@
 import React from 'react';
-import {FlatList, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import Delete from '../assets/icons/delete.svg';
-import Edit from '../assets/icons/edit.svg';
+import {
+  FlatList,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import Search from '../assets/icons/search.svg';
-import {useEmployeeStore} from '../store/employeeStore';
+import {useChatStore, useEmployeeStore} from '../store/chatStore';
 import {colors} from '../utils/colorManager';
+import {DashBoardText} from '../utils/textManager';
 import {commonStyles, textManger} from '../utils/textStyleManager';
-import {DashBoardText, dashBoardText} from '../utils/textManager';
 
 export default function Home({navigation}) {
-  const {details, deleteEmployee, resetDetails} = useEmployeeStore();
+  const {getLastMessage} = useChatStore();
+  const data = [
+    {
+      id: '75318592-1100-5bb4-86de-e9af24da10b6',
+      name: 'Abhishek',
+      recentMessage: 'hello',
+      profilePic: '../assets/images/sample.png',
+    },
+    {
+      id: '75318592-1100-5bb4-86de-e9af24da10b8',
+      name: 'Arun',
+      recentMessage: 'how are you ?',
+      profilePic: '../assets/images/sample.png',
+    },
+    {
+      id: '75318592-1100-5bb4-86de-e9af24da10b7',
+      name: 'Niranjan',
+      recentMessage: 'where are you ?',
+      profilePic: '../assets/images/sample.png',
+    },
+    {
+      id: '75318592-1100-5bb4-86de-e9af24da10b9',
+      name: 'Philip Manning',
+      recentMessage: 'where are you ?',
+      profilePic: '../assets/images/sample.png',
+    },
+    {
+      id: '75318592-1100-5bb4-86de-e9af24da10b5',
+      name: 'John Doe',
+      recentMessage: 'hey there',
+      profilePic: '../assets/images/sample.png',
+    },
+    {
+      id: '75318592-1100-5bb4-86de-e9af24da10b4',
+      name: 'Ram Manohar',
+      recentMessage: 'test message',
+      profilePic: '../assets/images/sample.png',
+    },
+    {
+      id: '75318592-1100-5bb4-86de-e9af24da10b3',
+      name: 'John Doe',
+      recentMessage: 'test message',
+      profilePic: '../assets/images/sample.png',
+    },
+    {
+      id: '75318592-1100-5bb4-86de-e9af24da10b2',
+      name: 'John Doe',
+      recentMessage: 'test message',
+      profilePic: '../assets/images/sample.png',
+    },
+    {
+      id: '75318592-1100-5bb4-86de-e9af24ra10b5',
+      name: 'John Luke',
+      recentMessage: 'test message',
+      profilePic: '../assets/images/sample.png',
+    },
+    {
+      id: '75318592-1100-5bb4-86de-e9af24ra10b5',
+      name: 'Isabella Austin',
+      recentMessage: 'test message',
+      profilePic: '../assets/images/sample.png',
+    },
+  ];
   const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -29,15 +96,15 @@ export default function Home({navigation}) {
       backgroundColor: colors.primary,
       width: '100%',
       justifyContent: 'center',
-      paddingHorizontal:20
+      paddingHorizontal: 20,
     },
     card: {
       backgroundColor: colors.white,
       padding: 10,
-      width: '90%',
+      width: '100%',
       alignSelf: 'center',
-      marginVertical: 10,
-      borderRadius: 10,
+      // marginVertical: 10,
+      // borderRadius: 10,
     },
     button: {
       marginVertical: 5,
@@ -73,65 +140,38 @@ export default function Home({navigation}) {
     },
   });
   const renderData = ({item}) => {
+    console.log(getLastMessage(item.id));
     return (
-      <View style={styles.card}>
+      <TouchableOpacity
+        onPress={() => navigation.navigate('chat', {item})}
+        style={styles.card}>
         <View style={styles.justRow}>
-          <View>
-            <View style={commonStyles.row}>
-              <Text style={textManger.heading_md_default}>
-                {DashBoardText.name}
-              </Text>
+          <View style={[commonStyles.row, commonStyles.centerView]}>
+            <Image
+              style={{width: 50, height: 50, borderRadius: 25}}
+              v
+              source={require('../assets/images/sample.png')}
+            />
+            <View>
               <Text
                 ellipsizeMode="tail"
                 numberOfLines={1}
-                style={[textManger.heading_md, {width: 180}]}>
+                style={[textManger.heading_md, {width: 180, marginLeft: 5}]}>
                 {item.name}
               </Text>
-            </View>
-            <View style={commonStyles.row}>
-              <Text style={textManger.heading_md_default}>
-                {DashBoardText.department}
-              </Text>
-              <Text style={textManger.heading_md}>{item.department}</Text>
-            </View>
-            <View style={commonStyles.row}>
-              <Text style={textManger.heading_md_default}>
-                {DashBoardText.position}
-              </Text>
-              <Text style={textManger.heading_md}>{item.position}</Text>
-            </View>
-            <View style={commonStyles.row}>
-              <Text style={textManger.heading_md_default}>
-                {DashBoardText.email}
-              </Text>
               <Text
                 ellipsizeMode="tail"
                 numberOfLines={1}
-                style={[textManger.heading_md, {width: 180}]}>
-                {item.email}
+                style={[
+                  textManger.heading_sm,
+                  {width: 180, marginLeft: 5, color: colors.lightBlack},
+                ]}>
+                {getLastMessage(item.id).message}
               </Text>
             </View>
           </View>
-          <View style={[styles.justRow, {width: '20%'}]}>
-            <TouchableOpacity
-              onPress={() => {
-                navigation.navigate('addEmployee', {details: item});
-              }}>
-              <Text>
-                <Edit />
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                deleteEmployee(item.id);
-              }}>
-              <Text>
-                <Delete />
-              </Text>
-            </TouchableOpacity>
-          </View>
         </View>
-      </View>
+      </TouchableOpacity>
     );
   };
   const renderHeader = () => {
@@ -153,7 +193,6 @@ export default function Home({navigation}) {
             <Search marginHorizontal={20} />
           </TouchableOpacity>
         </View>
-        
       </>
     );
   };
@@ -163,18 +202,18 @@ export default function Home({navigation}) {
         keyExtractor={(item, index) => index.toString()}
         ListHeaderComponent={renderHeader}
         ListHeaderComponentStyle={styles.heading}
-        ListFooterComponent={<View style={{height: 250}} />}
-        data={details}
+        // ListFooterComponent={<View style={{height: 250}} />}
+        data={data}
         renderItem={renderData}
         style={{width: '100%', flex: 1}}
       />
-      <TouchableOpacity
+      {/* <TouchableOpacity
         style={styles.button}
         onPress={() => {
           navigation.navigate('addEmployee');
         }}>
         <Text style={textManger.heading_lg}>{DashBoardText.addemp}</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </View>
   );
 }
